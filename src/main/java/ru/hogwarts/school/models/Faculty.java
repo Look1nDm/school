@@ -1,17 +1,22 @@
 package ru.hogwarts.school.models;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Entity;
 import java.util.Objects;
-
+@Entity // указываем что по этому шаблону из БД будут браться значения
 public class Faculty {
+    @Id // этому полю присваивается уникальный АДи в базе
+    @GeneratedValue// делегируем базе данных присвоение уникального ади каждому созданному элементу
     private long id;
     private String name;
     private String color;
-
-    public Faculty(long id, String name, String color) {
-        this.id = id;
-        this.name = name;
-        this.color = color;
-    }
+    // убрали конструктор т.к. теперь создание объекта будет доверено базе данных со значениями из нее же
+//    public Faculty(long id, String name, String color) {
+//        this.id = id;
+//        this.name = name;
+//        this.color = color;
+//    }
 
     @Override
     public String toString() {

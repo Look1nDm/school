@@ -2,32 +2,39 @@ package ru.hogwarts.school.services;
 
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.models.Faculty;
+import ru.hogwarts.school.repositiries.FacultyRepository;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.stream.Collectors;
 
 @Service
 public class FacultyService {
-    private final HashMap<Long, Faculty> faculties = new HashMap<>();
-    private long lastFaculty = 0;
+    private final FacultyRepository facultyRepository;// подрубаем полиморфизм и теперь репозитории будут прослойками
+    // между базой данных и сервисами , хотя методы в интерфейсах репозиторий мы не указывали, но нужные методы наследуются
+    // от интерфейса JpaRepository
 
+    //private final HashMap<Long, Faculty> faculties = new HashMap<>();
+    //private long lastFaculty = 0;
+// Элементы выше больше не нужны - мапа заменяется на базу данных , а адишник на уникальный айди при создании и занесении в базу
+    public FacultyService(FacultyRepository facultyRepository) {
+        this.facultyRepository = facultyRepository;
+    }
+// таблица с запросами висит на стене!!!
     public Faculty createFaculty(Faculty faculty){
-        faculty.setId(++lastFaculty);
-        return faculties.put(lastFaculty,faculty);
+        return facultyRepository.save(faculty);
     }
     public  Faculty findFaculty(long id){
-        return faculties.get(id);
+        return facultyRepository.findById(id).get();
     }
     public  Faculty editFaculty(Faculty faculty){
-        return faculties.put(faculty.getId(),faculty);
+        return facultyRepository.save(faculty);
     }
-    public  Faculty deleteFaculty(long id){
-        return faculties.remove(id);
+    public void deleteFaculty(long id){
+        facultyRepository.deleteById(id);
     }
-    public Collection<Faculty> getFacultyColor(String color){
-        return faculties.values().stream().
-                filter(e->e.getColor().equals(color)).
-                collect(Collectors.toList());
+//    public Collection<Faculty> getFacultyColor(String color){
+//        return facultyRepository.
+//    }
+    public Collection<Faculty> getAllFaculty(){
+        return facultyRepository.findAll();
     }
 }
