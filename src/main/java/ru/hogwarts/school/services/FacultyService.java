@@ -23,7 +23,7 @@ public class FacultyService {
         return facultyRepository.save(faculty);
     }
     public  Faculty findFaculty(long id){
-        return facultyRepository.findById(id).get();
+        return facultyRepository.findById(id).orElse(null);
     }
     public  Faculty editFaculty(Faculty faculty){
         return facultyRepository.save(faculty);
@@ -31,9 +31,9 @@ public class FacultyService {
     public void deleteFaculty(long id){
         facultyRepository.deleteById(id);
     }
-//    public Collection<Faculty> getFacultyColor(String color){
-//        return facultyRepository.
-//    }
+    public Collection<Faculty> findFacultyByColor(String color){
+        return facultyRepository.findFacultyByColor(color);
+    }
     public Collection<Faculty> getAllFaculty(){
         return facultyRepository.findAll();
     }

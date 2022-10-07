@@ -20,7 +20,7 @@ public class StudentService {
         return studentRepository.save(student);
     }
     public  Student findStudent(long id){
-        return studentRepository.findById(id).get();
+        return studentRepository.findById(id).orElse(null);
     }
     public  Student editStudent(Student student){
         return studentRepository.save(student);
@@ -28,9 +28,9 @@ public class StudentService {
     public void deleteStudent(long id){
         studentRepository.deleteById(id);
     }
-//    public Collection<Student> getStudentsAge (int age){
-//        return studentRepository.findAll();
-//    }
+    public Collection<Student> getStudentsAge (int age){
+        return studentRepository.findStudentByAge(age);
+    }
     public Collection<Student> getAllStudents(){
         return studentRepository.findAll();
     }

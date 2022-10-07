@@ -12,11 +12,14 @@ public class Faculty {
     private String name;
     private String color;
     // убрали конструктор т.к. теперь создание объекта будет доверено базе данных со значениями из нее же
-//    public Faculty(long id, String name, String color) {
-//        this.id = id;
-//        this.name = name;
-//        this.color = color;
-//    }
+    public Faculty(long id, String name, String color) {
+        this.id = id;
+        this.name = name;
+        this.color = color;
+    }
+
+    public Faculty() {
+    }
 
     @Override
     public String toString() {

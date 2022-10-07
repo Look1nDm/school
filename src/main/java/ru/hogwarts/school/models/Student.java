@@ -12,11 +12,14 @@ public class Student {
     private String name;
     private int age;
     // убрали конструктор т.к. теперь создание объекта будет доверено базе данных со значениями из нее же
-//    public Student(long id, String name, int age) {
-//        this.id = id;
-//        this.name = name;
-//        this.age = age;
-//    }
+    public Student(long id, String name, int age) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+    }
+    public Student(){
+
+    }
 
     @Override
     public String toString() {
