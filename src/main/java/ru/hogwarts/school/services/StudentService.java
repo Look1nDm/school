@@ -13,25 +13,32 @@ public class StudentService {
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
-//    private final HashMap<Long, Student> students = new HashMap<>();
-//    private long lastStudent = 0;
 
-    public Student createStudent(Student student){
+    public Student createStudent(Student student) {
         return studentRepository.save(student);
     }
-    public  Student findStudent(long id){
+
+    public Student findStudent(Long id) {
         return studentRepository.findById(id).orElse(null);
     }
-    public  Student editStudent(Student student){
+
+    public Student editStudent(Student student) {
         return studentRepository.save(student);
     }
-    public void deleteStudent(long id){
+
+    public void deleteStudent(Long id) {
         studentRepository.deleteById(id);
     }
-    public Collection<Student> getStudentsAge (int age){
+
+    public Collection<Student> getStudentsAge(Integer age) {
         return studentRepository.findStudentByAge(age);
     }
-    public Collection<Student> getAllStudents(){
+
+    public Collection<Student> getAllStudents() {
         return studentRepository.findAll();
+    }
+
+    public Collection<Student> findByAgeBetween(Integer min, Integer max) {
+        return studentRepository.findByAgeBetween(min, max);
     }
 }

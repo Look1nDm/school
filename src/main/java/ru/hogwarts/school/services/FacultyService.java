@@ -2,39 +2,47 @@ package ru.hogwarts.school.services;
 
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.models.Faculty;
+import ru.hogwarts.school.models.Student;
 import ru.hogwarts.school.repositiries.FacultyRepository;
 
 import java.util.Collection;
+import java.util.Set;
 
 @Service
 public class FacultyService {
-    private final FacultyRepository facultyRepository;// подрубаем полиморфизм и теперь репозитории будут прослойками
-    // между базой данных и сервисами , хотя методы в интерфейсах репозиторий мы не указывали, но нужные методы наследуются
-    // от интерфейса JpaRepository
+    private final FacultyRepository facultyRepository;
 
-    //private final HashMap<Long, Faculty> faculties = new HashMap<>();
-    //private long lastFaculty = 0;
-// Элементы выше больше не нужны - мапа заменяется на базу данных , а адишник на уникальный айди при создании и занесении в базу
     public FacultyService(FacultyRepository facultyRepository) {
         this.facultyRepository = facultyRepository;
     }
-// таблица с запросами висит на стене!!!
-    public Faculty createFaculty(Faculty faculty){
+
+    public Faculty createFaculty(Faculty faculty) {
         return facultyRepository.save(faculty);
     }
-    public  Faculty findFaculty(long id){
+
+    public Faculty findFaculty(Long id) {
         return facultyRepository.findById(id).orElse(null);
     }
-    public  Faculty editFaculty(Faculty faculty){
+
+    public Faculty editFaculty(Faculty faculty) {
         return facultyRepository.save(faculty);
     }
-    public void deleteFaculty(long id){
+
+    public void deleteFaculty(Long id) {
         facultyRepository.deleteById(id);
     }
-    public Collection<Faculty> findFacultyByColor(String color){
-        return facultyRepository.findFacultyByColor(color);
+
+    public Faculty findFacultyByColor(String color) {
+        return facultyRepository.findFacultyByColorIgnoreCase(color);
     }
-    public Collection<Faculty> getAllFaculty(){
+    public Faculty findFacultyByName(String name) {
+        return facultyRepository.findFacultyByNameIgnoreCase(name);
+    }
+    public Collection<Faculty> findAllFaculty(){
         return facultyRepository.findAll();
+    }
+
+    public Collection<Student> findStudentsByFaculty(Long numberFaculty){
+        return facultyRepository.findFacultiesByStudents(numberFaculty);
     }
 }

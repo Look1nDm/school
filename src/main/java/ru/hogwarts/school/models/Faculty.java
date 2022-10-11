@@ -3,7 +3,10 @@ package ru.hogwarts.school.models;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import java.util.Objects;
+import java.util.Set;
+
 @Entity // указываем что по этому шаблону из БД будут браться значения
 public class Faculty {
     @Id // этому полю присваивается уникальный АДи в базе
@@ -11,7 +14,10 @@ public class Faculty {
     private long id;
     private String name;
     private String color;
-    // убрали конструктор т.к. теперь создание объекта будет доверено базе данных со значениями из нее же
+
+    @OneToMany(mappedBy = "faculty")
+    private Set<Student> students;
+
     public Faculty(long id, String name, String color) {
         this.id = id;
         this.name = name;

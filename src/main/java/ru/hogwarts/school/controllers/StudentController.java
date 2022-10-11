@@ -19,27 +19,32 @@ public class StudentController {
     public Student createStudent(@RequestBody Student student){
         return studentService.createStudent(student);
     }
-    @GetMapping(path = "id")
-    public ResponseEntity <Student>getFaculty(@RequestParam long id){
+    @GetMapping(path = "{id}")
+    public ResponseEntity <Student>getStudent(@PathVariable Long id){
         Student student = studentService.findStudent(id);
         return ResponseEntity.ok(student);
     }
     @PutMapping()
-    public ResponseEntity<Student> putFaculty(@RequestBody Student student){
+    public ResponseEntity<Student> putStudent(@RequestBody Student student){
         Student student1 = studentService.editStudent(student);
         return ResponseEntity.ok(student1);
     }
-    @DeleteMapping(path = "id")
-    public ResponseEntity<Student> deleteFaculty(@RequestParam long id){
+    @DeleteMapping("{id}")
+    public ResponseEntity<Student> deleteStudent(@PathVariable Long id){
         studentService.deleteStudent(id);
         return ResponseEntity.ok().build();
     }
-    @GetMapping(path = "age")
-    public ResponseEntity<Collection<Student>> getAgeStudent(@RequestParam int age){
+    @GetMapping(params = "age")
+    public ResponseEntity<Collection<Student>> getAgeStudent(@RequestParam(required = false) Integer age){
         return ResponseEntity.ok(studentService.getStudentsAge(age));
     }
-    @GetMapping(path = "allStudent")
-    public Collection<Student> getAllStudents(){
-        return studentService.getAllStudents();
+    @GetMapping
+    public ResponseEntity<Collection<Student>> findStudents(@RequestParam(required = false) Integer min,
+                                                            @RequestParam(required = false) Integer max){
+        return ResponseEntity.ok(studentService.findByAgeBetween(min,max));
+    }
+    @GetMapping("all")
+    public ResponseEntity <Collection<Student>> findAllStudents(){
+        return ResponseEntity.ok(studentService.getAllStudents());
     }
 }
