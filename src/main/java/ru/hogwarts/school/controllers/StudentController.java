@@ -48,8 +48,8 @@ public class StudentController {
     public ResponseEntity <Collection<Student>> findAllStudents(){
         return ResponseEntity.ok(studentService.getAllStudents());
     }
-    @GetMapping
-    public ResponseEntity <Faculty> getFacultyByStudent(@RequestParam(required = false) Long id){
-        return ResponseEntity.ok(studentService.getFacultyByStudent(id));
+    @GetMapping("/{id}/faculty")
+    public Faculty getFacultyByStudent(@PathVariable("id") Long id){
+        return studentService.getFacultyByStudent(id);
     }
 }
