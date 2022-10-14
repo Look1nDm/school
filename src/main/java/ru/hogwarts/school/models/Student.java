@@ -3,10 +3,10 @@ package ru.hogwarts.school.models;
 import javax.persistence.*;
 import java.util.Objects;
 
-@Entity// указываем что по этому шаблону из БД будут браться значения
+@Entity
 public class Student {
-    @Id // этому полю присваивается уникальный АДи в базе
-    @GeneratedValue// делегируем базе данных присвоение уникального ади каждому созданному элементу
+    @Id
+    @GeneratedValue
     private long id;
     private String name;
     private int age;

@@ -9,7 +9,7 @@ import ru.hogwarts.school.services.StudentService;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("student")
+@RequestMapping("/student")
 public class StudentController {
     private final StudentService studentService;
 
@@ -20,7 +20,7 @@ public class StudentController {
     public Student createStudent(@RequestBody Student student){
         return studentService.createStudent(student);
     }
-    @GetMapping(path = "{id}")
+    @GetMapping(path = "/{id}")
     public ResponseEntity <Student>getStudent(@PathVariable Long id){
         Student student = studentService.findStudent(id);
         return ResponseEntity.ok(student);
@@ -30,12 +30,12 @@ public class StudentController {
         Student student1 = studentService.editStudent(student);
         return ResponseEntity.ok(student1);
     }
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Student> deleteStudent(@PathVariable Long id){
         studentService.deleteStudent(id);
         return ResponseEntity.ok().build();
     }
-    @GetMapping(params = "age")
+    @GetMapping(params = "/age")
     public ResponseEntity<Collection<Student>> getAgeStudent(@RequestParam(required = false) Integer age){
         return ResponseEntity.ok(studentService.getStudentsAge(age));
     }
@@ -44,12 +44,12 @@ public class StudentController {
                                                             @RequestParam(required = false) Integer max){
         return ResponseEntity.ok(studentService.findByAgeBetween(min,max));
     }
-    @GetMapping("all")
+    @GetMapping("/all")
     public ResponseEntity <Collection<Student>> findAllStudents(){
         return ResponseEntity.ok(studentService.getAllStudents());
     }
-    @GetMapping
-    public ResponseEntity <Faculty> getFacultyByStudent(@RequestParam(required = false) Long id){
+    @GetMapping("/studentId")
+    public ResponseEntity <Faculty> getFacultyByStudent(@RequestParam Long id){
         return ResponseEntity.ok(studentService.getFacultyByStudent(id));
     }
 }
