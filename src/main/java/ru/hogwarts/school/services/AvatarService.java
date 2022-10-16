@@ -22,7 +22,7 @@ public class AvatarService {
     private final AvatarRepository avatarRepository;
     private final StudentService studentService;
 
-    public AvatarService(AvatarRepository avatarRepository,StudentService studentService) {
+    public AvatarService(AvatarRepository avatarRepository, StudentService studentService) {
         this.avatarRepository = avatarRepository;
         this.studentService = studentService;
     }
@@ -46,7 +46,7 @@ public class AvatarService {
         avatar.setData(avatarFile.getBytes());
         avatarRepository.save(avatar);
     }
-    private Avatar findAvatar(Long studentId){
+    public Avatar findAvatar(Long studentId){
         return avatarRepository.findById(studentId).orElse(new Avatar());
     }
     private String getExtensions(String fileName) {

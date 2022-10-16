@@ -6,7 +6,7 @@ import ru.hogwarts.school.models.Faculty;
 import ru.hogwarts.school.services.FacultyService;
 
 @RestController
-@RequestMapping("faculty")
+@RequestMapping("/faculty")
 public class FacultyController {
     private final FacultyService facultyService;
 
@@ -19,7 +19,7 @@ public class FacultyController {
         return facultyService.createFaculty(faculty);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Faculty> getFaculty(@PathVariable Long id) {
         Faculty faculty = facultyService.findFaculty(id);
         return ResponseEntity.ok(faculty);
