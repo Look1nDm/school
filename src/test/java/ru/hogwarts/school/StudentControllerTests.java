@@ -21,7 +21,7 @@ import ru.hogwarts.school.models.Student;
 import ru.hogwarts.school.repositiries.StudentRepository;
 
 @WebMvcTest
-class StudentTests {
+class StudentControllerTests {
 
     @Autowired
     private MockMvc mockMvc;
