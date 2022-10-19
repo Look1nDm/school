@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.school.models.Avatar;
+import ru.hogwarts.school.repositiries.AvatarRepository;
 import ru.hogwarts.school.services.AvatarService;
 
 import javax.servlet.http.HttpServletResponse;
@@ -20,9 +21,11 @@ import java.nio.file.Path;
 @RequestMapping("/avatar")
 public class AvatarController {
     private final AvatarService avatarService;
+    private final AvatarRepository avatarRepository;
 
-    public AvatarController(AvatarService avatarService) {
+    public AvatarController(AvatarService avatarService, AvatarRepository avatarRepository) {
         this.avatarService = avatarService;
+        this.avatarRepository = avatarRepository;
     }
     @PostMapping(value = "/{studentId}",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> uploadAvatar(@PathVariable Long studentId, @RequestParam MultipartFile avatar) throws IOException {
@@ -31,7 +34,7 @@ public class AvatarController {
     }
     @GetMapping(value = "/{id}/avatar-from-db")
     public ResponseEntity<byte[]> downloadAvatar(@PathVariable Long id) {
-        Avatar avatar = avatarService.findAvatar(id);
+        Avatar avatar = avatarRepository.findById(id).orElseThrow();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(avatar.getMediaType()));
         headers.setContentLength(avatar.getData().length);
@@ -42,7 +45,7 @@ public class AvatarController {
         Avatar avatar = avatarService.findAvatar(id);
         Path path = Path.of(avatar.getFilePath());
         try(InputStream is = Files.newInputStream(path);
-            OutputStream os = response.getOutputStream();) {
+            OutputStream os = response.getOutputStream()) {
             response.setStatus(200);
             response.setContentType(avatar.getMediaType());
             response.setContentLength((int) avatar.getFileSize());

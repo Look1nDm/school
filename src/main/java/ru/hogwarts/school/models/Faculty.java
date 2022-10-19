@@ -1,16 +1,13 @@
 package ru.hogwarts.school.models;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
 
-@Entity // указываем что по этому шаблону из БД будут браться значения
+@Entity
 public class Faculty {
-    @Id // этому полю присваивается уникальный АДи в базе
-    @GeneratedValue// делегируем базе данных присвоение уникального ади каждому созданному элементу
+    @Id
+    @GeneratedValue
     private long id;
     private String name;
     private String color;

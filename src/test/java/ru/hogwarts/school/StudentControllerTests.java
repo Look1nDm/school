@@ -57,7 +57,7 @@ class StudentControllerTests {
     void setSettingsByStudent() throws Exception {
         name = "Harry Potter";
         age = 16;
-        id = 1l;
+        id = 1L;
         student = new Student(id, name, age);
         faculty = new Faculty(1, "Griffindor", "red");
         jsonObject = new JSONObject();
@@ -67,11 +67,10 @@ class StudentControllerTests {
         when(studentRepository.save(any(Student.class))).thenReturn(student);
         when(studentRepository.findById(id)).thenReturn(Optional.of(student));
         when(studentRepository.findStudentByAge(age)).thenReturn(Collections.singleton(student));
-        when(studentRepository.findStudentByFaculty(student)).thenReturn(faculty);
     }
 
     @Test
-    public void testGetStudents() throws Exception {
+    public void testGetStudent() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/student/{id}", id)
                         .accept(MediaType.APPLICATION_JSON))
@@ -95,7 +94,7 @@ class StudentControllerTests {
         @Test
         public void testGetStudentByFaculty() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/studentId/faculty?id="+id)
+                        .get("/{studentId}/faculty",id)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(id))

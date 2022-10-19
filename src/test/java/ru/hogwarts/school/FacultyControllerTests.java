@@ -71,7 +71,7 @@ class FacultyControllerTests {
     public void testGetFacultyByColor() throws Exception {
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/faculty?color="+color)
+                        .get("/faculty/{color}",color)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(id))

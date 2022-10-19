@@ -20,8 +20,8 @@ public class StudentController {
     public Student createStudent(@RequestBody Student student){
         return studentService.createStudent(student);
     }
-    @GetMapping(path = "/{id}")
-    public ResponseEntity <Student>getStudent(@PathVariable Long id){
+    @GetMapping("/{id}")
+    public ResponseEntity <Student> getStudent(@PathVariable Long id){
         Student student = studentService.findStudent(id);
         return ResponseEntity.ok(student);
     }
@@ -35,21 +35,21 @@ public class StudentController {
         studentService.deleteStudent(id);
         return ResponseEntity.ok().build();
     }
-    @GetMapping(params = "/age")
-    public ResponseEntity<Collection<Student>> getAgeStudent(@RequestParam(required = false) Integer age){
+    @GetMapping(params = "age")
+    public ResponseEntity<Collection<Student>> getAgeStudent(@RequestParam Integer age){
         return ResponseEntity.ok(studentService.getStudentsAge(age));
     }
-    @GetMapping
-    public ResponseEntity<Collection<Student>> findStudents(@RequestParam(required = false) Integer min,
-                                                            @RequestParam(required = false) Integer max){
+    @GetMapping({"min","max"})
+    public ResponseEntity<Collection<Student>> findStudentsAgeBetween(@RequestParam Integer min,
+                                                            @RequestParam Integer max){
         return ResponseEntity.ok(studentService.findByAgeBetween(min,max));
     }
-    @GetMapping("/all")
+    @GetMapping("all")
     public ResponseEntity <Collection<Student>> findAllStudents(){
         return ResponseEntity.ok(studentService.getAllStudents());
     }
-    @GetMapping("/studentId")
-    public ResponseEntity <Faculty> getFacultyByStudent(@RequestParam Long id){
-        return ResponseEntity.ok(studentService.getFacultyByStudent(id));
+    @GetMapping("/{studentId}/faculty")
+    public ResponseEntity <Faculty> getFacultyByStudent(@PathVariable Long studentId){
+        return ResponseEntity.ok(studentService.getFacultyByStudent(studentId));
     }
 }

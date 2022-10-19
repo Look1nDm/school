@@ -56,11 +56,6 @@ class FacultyServiceTest {
         assertEquals(extendedFaculty,facultyRepository.save(testFaculty));
     }
 
-//    @Test
-//    void deleteFaculty() {
-//
-//    }
-
     @Test
     void getFacultyColor() {
         Faculty testGetColor = new Faculty(2,"Puffenduy","yellow");

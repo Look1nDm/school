@@ -1,9 +1,13 @@
 package ru.hogwarts.school.controllers;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.models.Faculty;
+import ru.hogwarts.school.models.Student;
 import ru.hogwarts.school.services.FacultyService;
+
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/faculty")
@@ -31,25 +35,33 @@ public class FacultyController {
         return ResponseEntity.ok(faculty1);
     }
 
-    @DeleteMapping("{id}")
-    public ResponseEntity<Faculty> deleteFaculty(@PathVariable Long id) {
-        facultyService.deleteFaculty(id);
+    @DeleteMapping("/{delete_id}")
+    public ResponseEntity<Faculty> deleteFaculty(@PathVariable Long delete_id) {
+        facultyService.deleteFaculty(delete_id);
         return ResponseEntity.ok().build();
     }
-    @GetMapping
-    public ResponseEntity getAllFaculty(@RequestParam(required = false) String color,
-                                        @RequestParam(required = false) String name,
-                                        @RequestParam(required = false) Long number) {
+
+    @GetMapping("/color")
+    public ResponseEntity<Faculty> getFacultyByColor(@RequestParam String color) {
         if (color != null && !color.isBlank()) {
             return ResponseEntity.ok(facultyService.findFacultyByColor(color));
         }
-        if (name!=null && !name.isBlank()){
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/name")
+    public ResponseEntity<Faculty> getFacultyByName(@RequestParam String name) {
+        if (name != null && !name.isBlank()) {
             return ResponseEntity.ok(facultyService.findFacultyByName(name));
         }
-        if (number!=null){
-            facultyService.findStudentsByFaculty(number);
-            return ResponseEntity.ok().build();
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/number")
+    public ResponseEntity<Collection<Student>> getFacultyByColor(@RequestParam Long number) {
+        if (number != null) {
+            return ResponseEntity.ok(facultyService.getStudentsOfFaculty(number));
         }
-        return ResponseEntity.ok(facultyService.findAllFaculty());
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
